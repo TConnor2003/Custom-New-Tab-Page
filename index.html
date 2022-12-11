@@ -9,11 +9,18 @@
     <meta http-equiv="refresh" content="50">
 </head>
 <body>
-    <div class="searchbar">
-    <form action="https://www.google.com/search" method="get">
-        <input type="text" name="q" placeholder="Search Google" autofocus>
-        <input type="submit" value="Search">
-    </form>
-    </div>
+    <div id="cover">
+        <form action="https://www.google.com/search" method="get">
+          <div class="tb">
+            <div class="td"><input type="text" placeholder="Search" name="q" required></div>
+            <div class="td" id="s-cover">
+              <button type="submit">
+                <div id="s-circle"></div>
+                <span></span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
 </body>
 </html> 
