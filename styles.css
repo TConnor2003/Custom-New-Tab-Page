@@ -3,7 +3,6 @@ body, html {
     margin: 0;
     color: #FFFFFF;
     background-color: black;
-    background-image: url("https://source.unsplash.com/user/craftyplayz");
     height: 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -16,7 +15,7 @@ body, html {
 
   body {
     margin: 0;
-    background-color: #ffd8d8;
+    background-color: #000000;
   }
   
   .tb {
