@@ -44,7 +44,7 @@ button {
     margin: -83px auto 0 auto;
     background-color: #00000065;
     border-radius: 20px;
-    box-shadow: 0 10px 40px #000000, 0 0 0 20px #e2e2e2;
+    box-shadow: 0 10px 40px #000000, 0 0 0 20px #ffffff;
     transform: scale(0.4);
 }
 
@@ -148,5 +148,5 @@ button span:after {
 #s-cover:hover button span:after {
     right: -6px;
     width: 40px;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
 }
