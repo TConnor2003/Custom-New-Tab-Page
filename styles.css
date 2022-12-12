@@ -150,3 +150,28 @@ button span:after {
     width: 40px;
     background-color: rgb(255, 255, 255);
 }
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    background-color: #0000004f;
+    text-align: center;
+    text-decoration: none;
+}
+
+.links {
+    color: #fff;
+    text-decoration: none;
+    text-align: left;
+    border: 20px;
+    vertical-align: center;
+}
+
+
+
