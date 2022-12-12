@@ -168,9 +168,10 @@ footer {
 .links {
     color: #fff;
     text-decoration: none;
-    text-align: left;
+    text-align: center;
     border: 20px;
     vertical-align: center;
+    padding: 25px;
 }
 
 
