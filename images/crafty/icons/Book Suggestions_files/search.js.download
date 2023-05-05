@@ -1,0 +1,122 @@
+var covers = [];
+function search() {
+	// Clear results
+	document.getElementById("results").innerHTML = "";
+	document.getElementById("results").hidden = false;
+	document.getElementById("resultstitle").hidden = false;
+	var search = document.getElementById("search").value;
+	var amount = document.getElementById("amount").value;
+	if (amount == "") {
+		amount = 10;
+	}
+	var url = "https://www.googleapis.com/books/v1/volumes?key=AIzaSyCJ_13-EHy626y-3MnMTtkhL7gVLNy7D2c&maxResults=" + amount + "&q=" + search;
+	console.log(url);
+	// Make the request to the Google Books API
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", url);
+	xhr.onload = function () {
+		// Check if the request was successful
+		if (xhr.status === 200) {
+			// Get the response data
+			var response = JSON.parse(xhr.responseText);
+			// Check if there were any results
+			if (response.totalItems == 0) {
+				document.getElementById("results").innerHTML = "<div class='title'><h1>No Results</h1><h2><a href='https://www.google.com/search?q=" + search + "'>Google it</a></h2></div>";
+				return;
+			}
+			// Loop through the results and add them to the HTML div
+			var seen = {};
+			for (var i = 0; i < response.items.length; i++) {
+				var title = response.items[i].volumeInfo.title;
+				if (seen[title]) {
+					/* get the thumbnail of the book and store it in a global array called covers */
+					var img = response.items[i].volumeInfo.imageLinks.thumbnail;
+					covers.push(img);
+					continue;
+				}
+				seen[title] = true;
+				var div = document.createElement("div");
+				div.className = "gallery-item";
+				var img = response.items[i].volumeInfo.imageLinks.thumbnail;
+				var imgdiv = document.createElement("img");
+				imgdiv.className = "gallery-image";
+				imgdiv.src = img;
+				div.appendChild(imgdiv);
+				// Wrap the img element in an <a> tag that will call the info() function and pass through the link to the book from the API self link
+				var a = document.createElement("a");
+				a.href = "javascript:info('" + response.items[i].selfLink + "')";
+				a.appendChild(div);
+				// Add the <a> tag to the HTML div
+				document.getElementById("results").appendChild(a);
+			}
+		} else {
+			// There was an error
+			alert("There was an error: " + xhr.status);
+		}
+	};
+	// Send the request
+	console.log(covers);
+	xhr.send();
+}
+
+function info() {
+	/* get the title,author,series,genre,rating and page count of the book from the api link provided the log to console*/
+	var url = arguments[0];
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", url);
+	xhr.onload = function () {
+		// Check if the request was successful
+		if (xhr.status === 200) {
+			var response = JSON.parse(xhr.responseText);
+			/* get title author series genre rating page count and description and url to the play store */
+			var title = response.volumeInfo.title;
+			var author = response.volumeInfo.authors;
+			var series = response.volumeInfo.series;
+			var genre = response.volumeInfo.categories;
+			var rating = response.volumeInfo.averageRating;
+			var pages = response.volumeInfo.pageCount;
+			var description = response.volumeInfo.description;
+			var url = response.volumeInfo.infoLink;
+			document.getElementById("title").innerHTML = title;
+			document.getElementById("author").innerHTML = author;
+			document.getElementById("series").innerHTML = series;
+			document.getElementById("genre").innerHTML = genre;
+			document.getElementById("rating").innerHTML = rating + " / 5 <i class='fas fa-star'></i>";
+			document.getElementById("pages").innerHTML = pages;
+			document.getElementById("description").innerHTML = description;
+			document.getElementById("url").innerHTML = "<a href='" + url + "'>View on Google Books</a>";
+
+
+
+
+
+			/* variable covers */
+			var cover = covers[0];
+			document.getElementById("thumbnails").innerHTML = '<div class="gallery" id="covers">';
+			/* for each item in the cover array create a new gallery-item div and put an <img tag with the src to the value of the variable */
+			for (var i = 0; i < covers.length; i++) {
+				var gallery = document.createElement("div");
+				gallery.className = "gallery-item";
+				var img = document.createElement("img");
+				img.className = "gallery-image";
+				img.src = covers[i];
+				gallery.appendChild(img);
+				document.getElementById("thumbnails").appendChild(gallery);
+			}
+
+
+
+
+
+
+			document.getElementById("thumbnails").appendChild(gallery);
+			/* scroll to info id */
+			document.getElementById("info").scrollIntoView();
+		} else {
+			// There was an error
+			alert("There was an error: " + xhr.status);
+		}
+	};
+	// Send the request
+	xhr.send();
+}
